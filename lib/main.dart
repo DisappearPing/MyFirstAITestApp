@@ -99,17 +99,26 @@ class _TodoPageState extends State<TodoPage> {
                   ),
                   const SizedBox(height: 24),
                   Expanded(
-                    child: ListView.separated(
+                    child: ReorderableListView.builder(
                       itemCount: _todos.length,
-                      separatorBuilder: (_, _) => const SizedBox(height: 8),
+                      onReorder: (oldIndex, newIndex) {
+                        setState(() {
+                          if (oldIndex < newIndex) newIndex -= 1;
+                          final todo = _todos.removeAt(oldIndex);
+                          _todos.insert(newIndex, todo);
+                        });
+                      },
                       itemBuilder: (context, index) {
                         final todo = _todos[index];
                         return Card(
-                          child: CheckboxListTile(
-                            value: todo.done,
-                            onChanged: (value) {
-                              setState(() => todo.done = value ?? false);
-                            },
+                          key: ValueKey(todo),
+                          child: ListTile(
+                            leading: Checkbox(
+                              value: todo.done,
+                              onChanged: (value) {
+                                setState(() => todo.done = value ?? false);
+                              },
+                            ),
                             title: Text(
                               todo.title,
                               style: TextStyle(
@@ -118,11 +127,23 @@ class _TodoPageState extends State<TodoPage> {
                                     : null,
                               ),
                             ),
-                            secondary: IconButton(
-                              icon: const Icon(Icons.delete_outline),
-                              tooltip: '刪除',
-                              onPressed: () =>
-                                  setState(() => _todos.removeAt(index)),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ReorderableDragStartListener(
+                                  index: index,
+                                  child: const Icon(
+                                    Icons.drag_indicator,
+                                    semanticLabel: '拖曳排序',
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete_outline),
+                                  tooltip: '刪除',
+                                  onPressed: () =>
+                                      setState(() => _todos.removeAt(index)),
+                                ),
+                              ],
                             ),
                           ),
                         );
