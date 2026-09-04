@@ -38,6 +38,9 @@ class TodoListItem extends StatelessWidget {
                 todo.description,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  decoration: todo.isDone ? TextDecoration.lineThrough : null,
+                ),
               ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,

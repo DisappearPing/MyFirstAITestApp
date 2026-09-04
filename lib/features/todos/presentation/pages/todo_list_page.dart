@@ -99,9 +99,9 @@ class _TodoListPageState extends State<TodoListPage> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      TextButton.icon(
+                      OutlinedButton.icon(
                         onPressed: () => unawaited(_openEditor()),
-                        icon: const Icon(Icons.add),
+                        icon: const Icon(Icons.add_circle_outline),
                         label: const Text('新增含詳細內容的待辦'),
                       ),
                       const SizedBox(height: 24),
