@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:my_first_app/features/todos/data/models/todo.dart';
 import 'package:my_first_app/features/todos/data/repositories/todo_repository.dart';
+import 'package:my_first_app/features/todos/domain/models/todo.dart';
 
-class TodoViewModel extends ChangeNotifier {
-  TodoViewModel(this._repository);
+class TodoListViewModel extends ChangeNotifier {
+  TodoListViewModel(this._repository);
 
   final TodoRepository _repository;
   List<Todo> _todos = [];
@@ -17,7 +17,6 @@ class TodoViewModel extends ChangeNotifier {
   Future<void> loadTodos() async {
     _isLoading = true;
     notifyListeners();
-
     try {
       _todos = await _repository.getTodos();
     } finally {
@@ -26,17 +25,32 @@ class TodoViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> addTodo(String title) async {
+  Future<void> addTodo(String title, {String description = ''}) async {
     final trimmedTitle = title.trim();
     if (trimmedTitle.isEmpty) return;
-
     _todos = [
       ..._todos,
       Todo(
         id: DateTime.now().microsecondsSinceEpoch.toString(),
         title: trimmedTitle,
+        description: description.trim(),
       ),
     ];
+    await _saveAndNotify();
+  }
+
+  Future<void> updateTodo({
+    required String id,
+    required String title,
+    required String description,
+  }) async {
+    final trimmedTitle = title.trim();
+    if (trimmedTitle.isEmpty) return;
+    _todos = _todos
+        .map((todo) => todo.id == id
+            ? todo.copyWith(title: trimmedTitle, description: description.trim())
+            : todo)
+        .toList();
     await _saveAndNotify();
   }
 
@@ -54,7 +68,6 @@ class TodoViewModel extends ChangeNotifier {
 
   Future<void> reorderTodos(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) newIndex -= 1;
-
     final reorderedTodos = List<Todo>.of(_todos);
     final todo = reorderedTodos.removeAt(oldIndex);
     reorderedTodos.insert(newIndex, todo);

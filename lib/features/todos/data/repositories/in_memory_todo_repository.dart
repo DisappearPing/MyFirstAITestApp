@@ -1,4 +1,4 @@
-import 'package:my_first_app/features/todos/data/models/todo.dart';
+import 'package:my_first_app/features/todos/domain/models/todo.dart';
 import 'package:my_first_app/features/todos/data/repositories/todo_repository.dart';
 
 class InMemoryTodoRepository implements TodoRepository {

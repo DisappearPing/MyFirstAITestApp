@@ -1,4 +1,4 @@
-import 'package:my_first_app/features/todos/data/models/todo.dart';
+import 'package:my_first_app/features/todos/domain/models/todo.dart';
 
 abstract interface class TodoRepository {
   Future<List<Todo>> getTodos();
