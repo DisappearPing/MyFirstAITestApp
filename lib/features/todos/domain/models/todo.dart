@@ -19,4 +19,18 @@ class Todo {
       isDone: isDone ?? this.isDone,
     );
   }
+
+  Map<String, Object> toJson({required int position}) => {
+    'title': title,
+    'description': description,
+    'isDone': isDone,
+    'position': position,
+  };
+
+  factory Todo.fromJson(String id, Map<String, dynamic> json) => Todo(
+    id: id,
+    title: json['title'] as String? ?? '',
+    description: json['description'] as String? ?? '',
+    isDone: json['isDone'] as bool? ?? false,
+  );
 }

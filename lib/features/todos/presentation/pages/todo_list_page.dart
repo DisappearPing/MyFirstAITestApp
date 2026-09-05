@@ -7,9 +7,20 @@ import 'package:my_first_app/features/todos/presentation/view_models/todo_list_v
 import 'package:my_first_app/features/todos/presentation/widgets/todo_list_item.dart';
 
 class TodoListPage extends StatefulWidget {
-  const TodoListPage({super.key, required this.viewModel});
+  const TodoListPage({
+    super.key,
+    required this.viewModel,
+    this.userEmail,
+    this.isGuest = false,
+    this.onSignOut,
+    this.onOpenAccount,
+  });
 
   final TodoListViewModel viewModel;
+  final String? userEmail;
+  final bool isGuest;
+  final VoidCallback? onSignOut;
+  final VoidCallback? onOpenAccount;
 
   @override
   State<TodoListPage> createState() => _TodoListPageState();
@@ -74,7 +85,28 @@ class _TodoListPageState extends State<TodoListPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('今日待辦', style: Theme.of(context).textTheme.displaySmall),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              '今日待辦',
+                              style: Theme.of(context).textTheme.displaySmall,
+                            ),
+                          ),
+                          if (widget.isGuest && widget.onOpenAccount != null)
+                            FilledButton.tonalIcon(
+                              onPressed: widget.onOpenAccount,
+                              icon: const Icon(Icons.login),
+                              label: const Text('建立帳號'),
+                            )
+                          else if (widget.onOpenAccount != null)
+                            IconButton(
+                              tooltip: '會員中心',
+                              onPressed: widget.onOpenAccount,
+                              icon: const Icon(Icons.account_circle_outlined),
+                            ),
+                        ],
+                      ),
                       const SizedBox(height: 8),
                       Text('已完成 ${widget.viewModel.completedCount} / ${widget.viewModel.totalCount} 件事情'),
                       const SizedBox(height: 24),

@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_first_app/app/app.dart';
 import 'package:my_first_app/features/todos/data/repositories/in_memory_todo_repository.dart';
+import 'package:my_first_app/features/todos/presentation/pages/todo_list_page.dart';
 import 'package:my_first_app/features/todos/presentation/view_models/todo_list_view_model.dart';
 
 void main() {
@@ -33,7 +34,11 @@ void main() {
 
   testWidgets('shows the initial todo list', (tester) async {
     await tester.pumpWidget(
-      TodoApp(viewModel: TodoListViewModel(InMemoryTodoRepository())),
+      TodoApp(
+        home: TodoListPage(
+          viewModel: TodoListViewModel(InMemoryTodoRepository()),
+        ),
+      ),
     );
     await tester.pump();
 
