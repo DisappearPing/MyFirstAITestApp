@@ -16,10 +16,10 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = _firstNonEmpty(user.displayName, user.email) ?? '會員';
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) onBack();
+    return WillPopScope(
+      onWillPop: () async {
+        onBack();
+        return false;
       },
       child: Scaffold(
         appBar: AppBar(

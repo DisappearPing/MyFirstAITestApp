@@ -53,16 +53,15 @@ class _AuthPageState extends State<AuthPage> {
     final isGuest = widget.viewModel.user?.isAnonymous ?? false;
     final returnsToTodos = (isGuest && widget.onCancel != null) ||
         (!isGuest && widget.onContinueAsGuest != null);
-    return PopScope(
-      canPop: !returnsToTodos,
-      onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) {
-          if (isGuest) {
-            widget.onCancel?.call();
-          } else {
-            widget.onContinueAsGuest?.call();
-          }
+    return WillPopScope(
+      onWillPop: () async {
+        if (!returnsToTodos) return true;
+        if (isGuest) {
+          widget.onCancel?.call();
+        } else {
+          widget.onContinueAsGuest?.call();
         }
+        return false;
       },
       child: Scaffold(
         appBar: isGuest && kIsWeb
