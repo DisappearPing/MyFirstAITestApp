@@ -6,6 +6,7 @@ import 'package:my_first_app/features/auth/presentation/pages/account_page.dart'
 import 'package:my_first_app/features/auth/presentation/pages/auth_page.dart';
 import 'package:my_first_app/features/auth/presentation/view_models/auth_view_model.dart';
 import 'package:my_first_app/features/todos/data/repositories/firestore_todo_repository.dart';
+import 'package:my_first_app/features/todos/data/repositories/firebase_storage_todo_image_repository.dart';
 import 'package:my_first_app/features/todos/presentation/pages/todo_list_page.dart';
 import 'package:my_first_app/features/todos/presentation/view_models/todo_list_view_model.dart';
 
@@ -39,7 +40,12 @@ class _AuthGateState extends State<AuthGate> {
       _todoUserId = user?.id;
       _todoViewModel = user == null
           ? null
-          : TodoListViewModel(FirestoreTodoRepository(userId: user.id));
+          : TodoListViewModel(
+              FirestoreTodoRepository(userId: user.id),
+              imageRepository: FirebaseStorageTodoImageRepository(
+                userId: user.id,
+              ),
+            );
     }
     if (mounted) setState(() {});
   }

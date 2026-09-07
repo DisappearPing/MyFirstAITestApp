@@ -13,6 +13,7 @@ https://myfirstaitestapp.web.app/
 - 新增、完成與刪除待辦事項
 - 拖曳調整待辦順序
 - 點選待辦可編輯標題與詳細描述
+- 每個待辦可上傳 1 張圖片、預覽、更換與移除
 - 訪客模式：不登入也能先使用待辦
 - Google 登入與 Email／密碼註冊、登入
 - 可將訪客帳號綁定為正式帳號，保留原本待辦
@@ -51,11 +52,18 @@ lib/
 
 - Firebase Authentication：啟用 Anonymous、Google 與 Email／Password 供應商。
 - Cloud Firestore：待辦存放於 `users/{uid}/todos/{todoId}`，安全規則只允許使用者讀寫自己的資料。
+- Cloud Storage：圖片存放於 `users/{uid}/todos/{todoId}/`，規則限制為帳號本人、圖片格式與 5 MB 以內。
 - Android Google 登入：需在 Firebase Android App 設定加入 debug／release 簽署憑證的 SHA-1，並更新 `android/app/google-services.json`。
 
 `lib/firebase_options.dart` 與 `android/app/google-services.json` 為 Firebase 用戶端設定檔，可提交至版本控制；它們不是伺服器私鑰或服務帳戶金鑰。
 
 ## 更新紀錄
+
+### 2026-09-07
+
+- 新增待辦圖片功能：可從相簿選圖、預覽、更換與移除。
+- 圖片存放在 Firebase Storage，待辦文件只保存圖片路徑與網址。
+- 新增 Storage 安全規則，限制使用者只能存取自己的圖片，並限制檔案格式與大小。
 
 ### 2026-09-05
 

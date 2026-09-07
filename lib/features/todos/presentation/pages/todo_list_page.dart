@@ -51,14 +51,20 @@ class _TodoListPageState extends State<TodoListPage> {
       MaterialPageRoute(
         builder: (_) => TodoEditorPage(
           todo: todo,
-          onSave: (title, description) async {
+          onSave: (title, description, image, removeImage) async {
             if (todo == null) {
-              await widget.viewModel.addTodo(title, description: description);
+              await widget.viewModel.addTodo(
+                title,
+                description: description,
+                image: image,
+              );
             } else {
               await widget.viewModel.updateTodo(
                 id: todo.id,
                 title: title,
                 description: description,
+                newImage: image,
+                removeImage: removeImage,
               );
             }
           },

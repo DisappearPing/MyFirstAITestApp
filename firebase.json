@@ -1,1 +1,43 @@
-{"hosting":{"public":"build/web","ignore":["firebase.json","**/.*","**/node_modules/**"],"rewrites":[{"source":"**","destination":"/index.html"}],"headers":[{"source":"**/*.@(mjs|js|wasm|json)","headers":[{"key":"Cache-Control","value":"max-age=0,s-maxage=604800"}]},{"source":"**/*.@(jpg|jpeg|gif|png|svg|webp|css|eot|otf|ttf|ttc|woff|woff2|font.css)","headers":[{"key":"Cache-Control","value":"max-age=3600,s-maxage=604800"}]},{"source":"/index.html","headers":[{"key":"Cache-Control","value":"no-cache"}]}]},"flutter":{"platforms":{"android":{"default":{"projectId":"myfirstaitestapp","appId":"1:660186335283:android:7a9ba09c027579c9f57b46","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"myfirstaitestapp","configurations":{"android":"1:660186335283:android:7a9ba09c027579c9f57b46","web":"1:660186335283:web:21fb8a18561ee43ef57b46"}}}}}}
+{
+  "hosting": {
+    "public": "build/web",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [{"source": "**", "destination": "/index.html"}],
+    "headers": [
+      {
+        "source": "**/*.@(mjs|js|wasm|json)",
+        "headers": [{"key": "Cache-Control", "value": "max-age=0,s-maxage=604800"}]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|css|eot|otf|ttf|ttc|woff|woff2|font.css)",
+        "headers": [{"key": "Cache-Control", "value": "max-age=3600,s-maxage=604800"}]
+      },
+      {
+        "source": "/index.html",
+        "headers": [{"key": "Cache-Control", "value": "no-cache"}]
+      }
+    ]
+  },
+  "firestore": {"rules": "firestore.rules"},
+  "storage": {"rules": "storage.rules"},
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "myfirstaitestapp",
+          "appId": "1:660186335283:android:7a9ba09c027579c9f57b46",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "myfirstaitestapp",
+          "configurations": {
+            "android": "1:660186335283:android:7a9ba09c027579c9f57b46",
+            "web": "1:660186335283:web:21fb8a18561ee43ef57b46"
+          }
+        }
+      }
+    }
+  }
+}

@@ -32,9 +32,31 @@ class TodoListItem extends StatelessWidget {
             decoration: todo.isDone ? TextDecoration.lineThrough : null,
           ),
         ),
-        subtitle: todo.description.isEmpty
-            ? const Text('點一下可加入詳細描述')
-            : Text(
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (todo.imageUrl != null) ...[
+              const SizedBox(height: 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  todo.imageUrl!,
+                  width: 104,
+                  height: 72,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => const SizedBox(
+                    width: 104,
+                    height: 72,
+                    child: Center(child: Icon(Icons.broken_image_outlined)),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+            ],
+            if (todo.description.isEmpty)
+              const Text('點一下可加入詳細描述')
+            else
+              Text(
                 todo.description,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -42,6 +64,8 @@ class TodoListItem extends StatelessWidget {
                   decoration: todo.isDone ? TextDecoration.lineThrough : null,
                 ),
               ),
+          ],
+        ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
